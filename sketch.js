@@ -40,4 +40,5 @@ function keyPressed() {
   } else if (keyCode === LEFT_ARROW && snake.xspeed === 0) {
     snake.dir(-1, 0);
   }
+  
 }

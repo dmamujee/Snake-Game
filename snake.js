@@ -51,10 +51,17 @@ function Snake() {
 		for (var i = 0; i < this.tail.length; i++) {
 			var pos = this.tail[i];
 			var d = dist(this.x, this.y, pos.x, pos.y);
-				if (d < 1) {
-					this.total = 0;
-					this.tail = [];
-				}
+			console.log("d: " + d);
+			if (d < 1) {
+				console.log("starting over");
+				window.alert("Game Over! Score: " + this.score);
+				this.x = 0;
+				this.y = 0;
+				this.xspeed = 1;
+				this.yspeed = 0;
+				this.total = 0;
+				this.tail = [];
+			}
 		}
 	}
 }
