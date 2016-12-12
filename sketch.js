@@ -1,12 +1,13 @@
 var snake;
-var scl = 80;
+var scl = 20;
 var food;
-var godMode = true;
+var godMode = false;
+var fps = 10;
 
 function setup() {
 	createCanvas(640,640);
 	snake = new Snake();
-	frameRate(5);
+	frameRate(fps);
 	foodLocation()
 }
 
@@ -56,5 +57,3 @@ function keyPressed() {
   }
   
 }
-
-if (this.snake.length)

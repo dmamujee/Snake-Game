@@ -5,7 +5,7 @@ function Snake() {
 	this.yspeed = 0;
 	this.total = 0;
 	this.tail = [];
-	this.increase = 6;
+	this.increase = 2;
 	this.moveQueue = [];
 
 	this.update = function() {
@@ -28,6 +28,7 @@ function Snake() {
 	}
 
 	this.show = function() {
+		this.display_score();
 		fill(255);
 		for (var i = 0; i < this.tail.length; i++) {
 	    	rect(this.tail[i].x, this.tail[i].y, scl, scl);
@@ -51,7 +52,7 @@ function Snake() {
 	}
 
 	this.dying = function() {
-		window.alert("Game Over! Score: " + this.total*10);
+		// window.alert("Game Over! Score: " + this.total*10);
 		this.x = 0;
 		this.y = 0;
 		this.xspeed = 1;
@@ -59,6 +60,12 @@ function Snake() {
 		this.total = 0;
 		this.tail = [];
 
+	}
+
+	this.display_score = function(){
+		var results_box = document.getElementById('output');
+		var message = "Score:  " + this.total*10;
+		results_box.innerHTML = message;
 	}
 
 	this.death = function() {
@@ -86,7 +93,7 @@ function Snake() {
 				}
 			}
 
-		}else {
+		} else {
 			// Check that the head never touches part of the tail
 			for (var i = 0; i < this.tail.length; i++) {
 				var pos = this.tail[i];
