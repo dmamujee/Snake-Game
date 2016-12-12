@@ -22,7 +22,6 @@ function foodLocation() {
 	  	if (food.x === snake.x && food.y === snake.y) continue;
 	  	for (var i = 0; i < snake.tail.length; i++){
 	  		if (food.x === snake.tail[i].x && food.y === snake.tail[i].y){
-	  			console.log("Food on Snake!");
 	  			temp = true;
 	  			break;
 	  		}

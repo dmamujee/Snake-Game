@@ -5,20 +5,23 @@ function Snake() {
 	this.yspeed = 0;
 	this.total = 0;
 	this.tail = [];
-	this.increase = 2;
+	this.increase = 8;
 	this.moveQueue = [];
 
 	this.update = function() {
-		if(this.total === this.tail.length){
-			for  (var i = 0; i < this.tail.length-1; i++){
-				this.tail[i] = this.tail[i+1];
-			}
-			this.tail[this.total-1] = createVector(this.x,this.y);
-		} else{
-			for (var i = this.tail.length; i < this.total; i++){
+
+		for (var i = this.tail.length; i < this.total; i++){
+			if (this.tail.length === 0){
 				this.tail[i] = createVector(this.x,this.y);
+			} else{
+				this.tail[i] = this.tail[this.tail.length-1];
 			}
 		}
+
+		for  (var i = this.tail.length-1; i > 0; i--){
+			this.tail[i] = this.tail[i-1];
+		}
+		if (this.total !== 0) this.tail[0] = createVector(this.x,this.y);
 
 		this.x = this.x + this.xspeed*scl;
 		this.y = this.y + this.yspeed*scl;
