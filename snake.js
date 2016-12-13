@@ -5,8 +5,9 @@ function Snake() {
 	this.yspeed = 0;
 	this.total = 0;
 	this.tail = [];
-	this.increase = 8;
+	this.increase = 2;
 	this.moveQueue = [];
+	this.highScore = 0;
 
 	this.update = function() {
 
@@ -66,9 +67,12 @@ function Snake() {
 	}
 
 	this.display_score = function(){
-		var results_box = document.getElementById('output');
-		var message = "Score:  " + this.total*10;
-		results_box.innerHTML = message;
+		var output = document.getElementById('score');
+		var message = "Score:  " + this.total*10 ;
+		output.innerHTML = message;
+
+		if (this.total*10 > this.highScore) this.highScore = this.total*10;
+		document.getElementById('highscore').innerHTML = 'High Score: ' + this.highScore;
 	}
 
 	this.death = function() {
