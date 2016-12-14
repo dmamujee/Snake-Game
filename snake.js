@@ -24,6 +24,8 @@ function Snake() {
 		}
 		if (this.total !== 0) this.tail[0] = createVector(this.x,this.y);
 
+		this.move();
+
 		this.x = this.x + this.xspeed*scl;
 		this.y = this.y + this.yspeed*scl;
 
@@ -41,9 +43,14 @@ function Snake() {
 
 	}
 
-	this.dir = function(x,y) {
-		this.xspeed = x;
-		this.yspeed = y;
+	this.move = function(x,y) {
+		if (this.moveQueue.length !== 0){
+			console.log("moveQueue: " + this.moveQueue);
+			console.log("moveQueue.length: " + this.moveQueue.length);
+			var move = this.moveQueue.pop();
+			this.xspeed = move.x;
+			this.yspeed = move.y;
+		} 
 	}
 
 	this.eat = function(pos){

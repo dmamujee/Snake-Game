@@ -45,14 +45,21 @@ function draw() {
 }
 
 function keyPressed() {
-  if (keyCode === UP_ARROW && snake.yspeed === 0) {
-    snake.dir(0, -1);
-  } else if (keyCode === DOWN_ARROW && snake.yspeed === 0) {
-    snake.dir(0, 1);
-  } else if (keyCode === RIGHT_ARROW && snake.xspeed === 0) {
-    snake.dir(1, 0);
-  } else if (keyCode === LEFT_ARROW && snake.xspeed === 0) {
-    snake.dir(-1, 0);
-  }
+	var vector;
+	if (keyCode === UP_ARROW && snake.yspeed === 0) {
+    	vector = createVector(0, -1);
+  	} else if (keyCode === DOWN_ARROW && snake.yspeed === 0) {
+    	vector = createVector(0, 1);
+  	} else if (keyCode === RIGHT_ARROW && snake.xspeed === 0) {
+    	vector = createVector(1, 0);
+  	} else if (keyCode === LEFT_ARROW && snake.xspeed === 0) {
+    	vector = createVector(-1, 0);
+  	} else{
+  		return;
+  	}
+
+  	snake.moveQueue.push(vector);
+  	console.log("moveQueue: " + snake.moveQueue);
+
   
 }
