@@ -45,8 +45,6 @@ function Snake() {
 
 	this.move = function(x,y) {
 		if (this.moveQueue.length !== 0){
-			console.log("moveQueue: " + this.moveQueue);
-			console.log("moveQueue.length: " + this.moveQueue.length);
 			var move = this.moveQueue.pop();
 			this.xspeed = move.x;
 			this.yspeed = move.y;
