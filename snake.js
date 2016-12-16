@@ -1,13 +1,15 @@
 function Snake() {
 	this.x = 0;
 	this.y = 0;
-	this.xspeed = 1;
+	this.xspeed = 0;
 	this.yspeed = 0;
 	this.total = 0;
 	this.tail = [];
 	this.increase = 2;
 	this.moveQueue = [];
 	this.highScore = 0;
+	this.fps = 10;
+	this.increaseDiff = 0.05;
 
 	this.update = function() {
 
@@ -34,7 +36,6 @@ function Snake() {
 	}
 
 	this.show = function() {
-		this.display_score();
 		fill(255);
 		for (var i = 0; i < this.tail.length; i++) {
 	    	rect(this.tail[i].x, this.tail[i].y, scl, scl);
@@ -55,26 +56,52 @@ function Snake() {
 		var d = dist(this.x, this.y, pos.x, pos.y);
 		if (d < 1) {
 			this.total = this.total + this.increase;
+			this.update_score();
+			this.increaseSpeed(this.increaseDiff*this.increase);
+
+			console.log("fps: " + this.fps);
+			console.log("frameRate(): " + frameRate());
 			return true;
 		}
 		else return false;
 	}
 
+	//Parameter increase should be the percentage increase of speed desired
+	this.increaseSpeed = function(increase){
+		console.log("increase: " + increase);
+		if (increase < 0) return;
+		this.fps = this.fps + increase;
+		frameRate(this.fps);
+	}
+
 	this.dying = function() {
-		// window.alert("Game Over! Score: " + this.total*10);
+		window.alert("Game Over! Score: " + this.total*10);
 		this.x = 0;
 		this.y = 0;
-		this.xspeed = 1;
+		this.xspeed = 0;
 		this.yspeed = 0;
 		this.total = 0;
 		this.tail = [];
+		this.fps = 10;
+		this.moveQueue = [];
+		this.update_score();
+		this.increaseSpeed(0);
+		this.foodLocation();
 
 	}
 
-	this.display_score = function(){
+	this.update_score = function(){
 		var output = document.getElementById('score');
 		var message = "Score:  " + this.total*10 ;
 		output.innerHTML = message;
+
+
+		// //TODO
+		// var temp = this.total/this.increaseDiff;
+		// console.log("fps: " + this.fps);
+		// console.log("temp: " + temp);
+		// if ( (this.fps-temp) <= 9) this.increaseSpeed(1);
+		// console.log("fps: " + this.fps);
 
 		if (this.total*10 > this.highScore) this.highScore = this.total*10;
 		document.getElementById('highscore').innerHTML = 'High Score: ' + this.highScore;
@@ -115,5 +142,24 @@ function Snake() {
 				}			
 			}
 		}
+	}
+
+	this.foodLocation = function(){
+		var cols = floor(width/scl);
+	  	var rows = floor(height/scl);
+	  	var temp = true;
+	  	while (temp){
+	  		food = createVector(floor(random(cols)), floor(random(rows)));
+		  	food.mult(scl);
+		  	temp = false;
+		  	if (food.x === this.x && food.y === this.y) continue;
+		  	for (var i = 0; i < this.tail.length; i++){
+		  		if (food.x === this.tail[i].x && food.y === this.tail[i].y){
+		  			temp = true;
+		  			break;
+		  		}
+
+		  	}
+	  	}
 	}
 }

@@ -2,39 +2,20 @@ var snake;
 var scl = 20;
 var food;
 var godMode = false;
-var fps = 10;
 
 function setup() {
 	createCanvas(640,640);
 	snake = new Snake();
-	frameRate(fps);
-	foodLocation()
-}
-
-function foodLocation() {
-  	var cols = floor(width/scl);
-  	var rows = floor(height/scl);
-  	var temp = true;
-  	while (temp){
-  		food = createVector(floor(random(cols)), floor(random(rows)));
-	  	food.mult(scl);
-	  	temp = false;
-	  	if (food.x === snake.x && food.y === snake.y) continue;
-	  	for (var i = 0; i < snake.tail.length; i++){
-	  		if (food.x === snake.tail[i].x && food.y === snake.tail[i].y){
-	  			temp = true;
-	  			break;
-	  		}
-
-	  	}
-  	}
+	snake.update_score();
+	frameRate(snake.fps);
+	snake.foodLocation()
 }
 
 function draw() {
 	background(51);
 
 	if ( snake.eat(food) ){
-		foodLocation();
+		snake.foodLocation();
 	}
 	if (!godMode) snake.death();
 	snake.update();
@@ -59,7 +40,4 @@ function keyPressed() {
   	}
 
   	snake.moveQueue.push(vector);
-  	console.log("moveQueue: " + snake.moveQueue);
-
-  
 }
