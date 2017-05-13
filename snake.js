@@ -1,3 +1,5 @@
+var initialfps = 3
+
 function Snake() {
 	this.x = 0;
 	this.y = 0;
@@ -8,7 +10,10 @@ function Snake() {
 	this.increase = 2;
 	this.moveQueue = [];
 	this.highScore = 0;
-	this.fps = 10;
+	// this.highScore = getCookie("highScore");
+	// console.log("Intial High Score: " + this.highScore);
+	if (this.highScore === "") this.highScore = 0;
+	this.fps = initialfps;
 	this.increaseDiff = 0.05;
 
 	this.update = function() {
@@ -82,7 +87,7 @@ function Snake() {
 		this.yspeed = 0;
 		this.total = 0;
 		this.tail = [];
-		this.fps = 10;
+		this.fps = initialfps;
 		this.moveQueue = [];
 		this.update_score();
 		this.increaseSpeed(0);
@@ -95,15 +100,11 @@ function Snake() {
 		var message = "Score:  " + this.total*10 ;
 		output.innerHTML = message;
 
-
-		// //TODO
-		// var temp = this.total/this.increaseDiff;
-		// console.log("fps: " + this.fps);
-		// console.log("temp: " + temp);
-		// if ( (this.fps-temp) <= 9) this.increaseSpeed(1);
-		// console.log("fps: " + this.fps);
-
-		if (this.total*10 > this.highScore) this.highScore = this.total*10;
+		if (this.total*10 > this.highScore){
+			this.highScore = this.total*10;
+			// setCookie("highScore", this.highscore, 30);
+			// console.log("High Score: " + getCookie("highScore"));
+		}
 		document.getElementById('highscore').innerHTML = 'High Score: ' + this.highScore;
 	}
 
@@ -162,4 +163,28 @@ function Snake() {
 		  	}
 	  	}
 	}
+
+	//Cookies code from: http://www.w3schools.com/js/js_cookies.asp
+	this.setCookie = function(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	    var expires = "expires="+d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	this.getCookie = function(cname) {
+	    var name = cname + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
+	}
+
 }
