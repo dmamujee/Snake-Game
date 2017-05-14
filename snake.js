@@ -1,4 +1,4 @@
-var initialfps = 3
+var initialfps = 10
 
 function Snake() {
 	this.x = 0;
